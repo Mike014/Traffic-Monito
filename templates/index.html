@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traffic Monitor</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Traffic Monitor</h1>
+    <div id="map"></div>
+    <div id="traffic-info"></div>
+    <div id="coordinates-info"></div>
+    <div id="path-info"></div>
+    <div>
+        <p>Click on the map to select the start point and the end point.</p>
+        <input type="hidden" id="start-coordinates">
+        <input type="hidden" id="end-coordinates">
+        <button id="calculate-path">Calculate Path</button>
+    </div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+

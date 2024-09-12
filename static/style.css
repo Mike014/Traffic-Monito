@@ -1,0 +1,11 @@
+#map {
+    height: 500px;
+    width: 100%;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+#coordinates-info, #path-info {
+    margin-top: 10px;
+    font-size: 14px;
+}
