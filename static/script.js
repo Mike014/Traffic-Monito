@@ -1,4 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
+    var mapElement = document.getElementById('map');
+    if (!mapElement) {
+        console.error('Elemento con ID "map" non trovato.');
+        return;
+    }
+
     var map = L.map('map').setView([51.505, -0.09], 13);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -8,18 +14,38 @@ document.addEventListener('DOMContentLoaded', function () {
     var startMarker, endMarker;
 
     map.on('click', function (e) {
+        var startCoordinatesElement = document.getElementById('start-coordinates');
+        var endCoordinatesElement = document.getElementById('end-coordinates');
+        if (!startCoordinatesElement || !endCoordinatesElement) {
+            console.error('Elementi con ID "start-coordinates" o "end-coordinates" non trovati.');
+            return;
+        }
+
         if (!startMarker) {
             startMarker = L.marker(e.latlng).addTo(map).bindPopup("Start Point").openPopup();
-            document.getElementById('start-coordinates').value = JSON.stringify(e.latlng);
+            startCoordinatesElement.value = JSON.stringify(e.latlng);
         } else if (!endMarker) {
             endMarker = L.marker(e.latlng).addTo(map).bindPopup("End Point").openPopup();
-            document.getElementById('end-coordinates').value = JSON.stringify(e.latlng);
+            endCoordinatesElement.value = JSON.stringify(e.latlng);
         }
     });
 
-    document.getElementById('calculate-path').addEventListener('click', function () {
-        var startCoordinates = JSON.parse(document.getElementById('start-coordinates').value);
-        var endCoordinates = JSON.parse(document.getElementById('end-coordinates').value);
+    var calculatePathButton = document.getElementById('calculate-path');
+    if (!calculatePathButton) {
+        console.error('Elemento con ID "calculate-path" non trovato.');
+        return;
+    }
+
+    calculatePathButton.addEventListener('click', function () {
+        var startCoordinatesElement = document.getElementById('start-coordinates');
+        var endCoordinatesElement = document.getElementById('end-coordinates');
+        if (!startCoordinatesElement || !endCoordinatesElement) {
+            console.error('Elementi con ID "start-coordinates" o "end-coordinates" non trovati.');
+            return;
+        }
+
+        var startCoordinates = JSON.parse(startCoordinatesElement.value);
+        var endCoordinates = JSON.parse(endCoordinatesElement.value);
         calculateShortestPath(startCoordinates, endCoordinates);
     });
 
@@ -80,8 +106,13 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
 
                         // Display traffic information
-                        var trafficInfo = "Traffic prediction: " + data.traffic_description;
-                        document.getElementById('traffic-info').innerText = trafficInfo;
+                        var trafficInfoElement = document.getElementById('traffic-info');
+                        if (trafficInfoElement) {
+                            var trafficInfo = "Traffic prediction: " + data.traffic_description;
+                            trafficInfoElement.innerText = trafficInfo;
+                        } else {
+                            console.error('Elemento con ID "traffic-info" non trovato.');
+                        }
                     })
                     .catch(error => {
                         console.error('Error:', error);
@@ -94,6 +125,12 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 });
+
+
+
+
+
+
 
 
 
